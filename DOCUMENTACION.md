@@ -53,5 +53,8 @@ Durante la migración del entorno local (Windows) al entorno de producción (OCI
 
 <img width="1282" height="806" alt="Screenshot 2026-07-22 223513" src="https://github.com/user-attachments/assets/8f9de053-c313-4481-be2b-608e8a8b1643" />
 
+<img width="1611" height="736" alt="Screenshot 2026-07-22 224021" src="https://github.com/user-attachments/assets/4638d7dd-109f-4b2f-afd9-e391b5fded21" />
+
+
 
 
