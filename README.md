@@ -1,26 +1,23 @@
 # 🤖 Alura Agente Challenge - Bastián Ignacio Cerda Báez
 
-Este proyecto es un Agente de Inteligencia Artificial basado en la arquitectura **RAG (Retrieval-Augmented Generation)**, diseñado para leer documentos corporativos internos y responder preguntas en lenguaje natural sin necesidad de que el usuario busque manualmente en el texto.
+Este proyecto es un Agente de Inteligencia Artificial basado en la arquitectura **RAG (Retrieval-Augmented Generation)**, diseñado para procesar documentos corporativos internos y responder preguntas en lenguaje natural sin necesidad de que el colaborador lea el archivo completo.
 
-## 🏗 Arquitectura
+## 🏗 Arquitectura y Tecnologías
 * **Lenguaje:** Python
-* **Orquestador:** LangChain
-* **Procesamiento de Documentos:** PyPDF
-* **Base de Datos Vectorial:** FAISS (Facebook AI Similarity Search)
-* **LLM & Embeddings:** Google Gemini (gemini-1.5-flash & embedding-001)
+* **Orquestador RAG:** LangChain
+* **Procesamiento de Documentos:** PyPDFLoader (división de texto con RecursiveCharacterTextSplitter)
+* **Embeddings y Base de Datos Vectorial:** HuggingFace (`all-MiniLM-L6-v2`) con FAISS (búsqueda de similitud local)
+* **LLM:** Cohere API V2 (Modelo `command-a-plus-05-2026` / `command-r-plus`) conectado vía peticiones REST directas.
 
-## 💬 Ejemplos de uso
-**Usuario:** ¿Cuáles son las condiciones para solicitar un reembolso?
-**Agente:** Según la política, los reembolsos solo se aplican a productos devueltos dentro de los primeros 30 días con su empaque original.
+## 💬 Ejemplos de Preguntas y Respuestas
+**Usuario:** ¿Cuáles son las situaciones que requieren escalamiento según la política?
+**Agente:** Según la sección 31 del documento, las situaciones que requieren escalamiento incluyen cobros sin orden visible, discrepancias entre evidencia y relato, y solicitudes de revisión de nivel superior.
 
-*(Nota: Agrega 2 preguntas y respuestas que te haya dado tu script al probarlo con tu documento específico)*
+**Usuario:** ¿Me puedes decir el contenido que tiene documento.pdf?
+**Agente:** No tengo el archivo completo de documento.pdf. Lo que tengo es un extracto de una política interna que incluye notas de coordinación, matriz orientativa de decisión, preguntas frecuentes sobre devoluciones y criterios de escalamiento.
 
-## 🚀 Cómo ejecutarlo localmente
-1. Clona este repositorio.
-2. Instala las dependencias: `pip install -r requirements.txt`
-3. Crea un archivo `.env` en la raíz y agrega tu API Key: `GOOGLE_API_KEY=tu_clave_aqui`
-4. Ejecuta el script: `python agente.py`
-
-## ☁️ Deploy en Oracle Cloud Infrastructure (OCI)
-![Deploy OCI](LINK_A_TU_CAPTURA_AQUI)
-*El agente se encuentra desplegado y ejecutándose correctamente en una instancia de OCI Compute.*
+## 🚀 Instrucciones para ejecutar el proyecto localmente
+1. Clona este repositorio en tu máquina local.
+2. Crea un entorno virtual e instala las dependencias: 
+   ```bash
+   pip install -r requirements.txt
