@@ -46,3 +46,12 @@ Durante la migración del entorno local (Windows) al entorno de producción (OCI
 * **Solución:** Se diseñó una función de autodescubrimiento que se conecta a la API de Cohere al inicializar el agente, consulta la lista completa de modelos vivos en tiempo real, filtra exclusivamente los que tienen endpoints de `chat`, y selecciona de forma autónoma el modelo más avanzado disponible en la cuenta del usuario (en este caso, detectó y asignó automáticamente `command-a-plus-05-2026`). Esto hace que el código sea escalable y a prueba de obsolescencia.
 
 ## 4. Evidencia de Ejecución en Producción
+
+<img width="1292" height="870" alt="Screenshot 2026-07-22 223450" src="https://github.com/user-attachments/assets/aea5f907-8ed3-4395-9783-6ae4d11c5500" />
+
+<img width="1258" height="846" alt="Screenshot 2026-07-22 223500" src="https://github.com/user-attachments/assets/ab9f8360-136f-402a-932a-3d5aef3ed143" />
+
+<img width="1282" height="806" alt="Screenshot 2026-07-22 223513" src="https://github.com/user-attachments/assets/8f9de053-c313-4481-be2b-608e8a8b1643" />
+
+
+
