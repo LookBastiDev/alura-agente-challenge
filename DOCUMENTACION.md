@@ -10,7 +10,7 @@ graph TD
     B --> C{Orquestador LangChain}
     C -->|1. Ingesta de PDF| D[PyPDFLoader + Text Splitter]
     D -->|2. Creación de Embeddings| E[(FAISS Vector Store local)]
-    E -->|3. Recupera Contextos (k=3)| C
+    E -->|3. Recupera Contextos: k=3| C
     C -->|4. Construcción de Prompt| F[Cohere API V2 <br> Modelo: command-a-plus]
     F -->|5. Respuesta Generada| B
     B -->|Muestra tabla/texto| A
