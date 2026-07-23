@@ -6,11 +6,13 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
 
-# 1. Cargar la clave
+# ==========================================
+# CONFIGURACIÓN Y CLIENTE COHERE
+# ==========================================
+
 load_dotenv()
 
 def obtener_modelo_cohere(api_key):
-    """Consulta a Cohere qué modelos están habilitados"""
     print("🔍 Consultando a Cohere los modelos disponibles...")
     url = "https://api.cohere.com/v1/models"
     headers = {
@@ -39,8 +41,6 @@ def obtener_modelo_cohere(api_key):
         return "command-r-plus"
 
 def consultar_cohere_directo(contexto, pregunta, api_key, modelo_nombre):
-    """Conexión directa a Cohere usando la NUEVA API V2"""
-    # Usamos la ruta V2
     url = "https://api.cohere.com/v2/chat"
     
     headers = {
@@ -56,7 +56,6 @@ def consultar_cohere_directo(contexto, pregunta, api_key, modelo_nombre):
         f"Contexto del documento:\n{contexto}"
     )
     
-    # La API v2 exige la estructura "messages" con "role" y "content"
     payload = {
         "model": modelo_nombre,
         "messages": [
@@ -69,7 +68,6 @@ def consultar_cohere_directo(contexto, pregunta, api_key, modelo_nombre):
         response = requests.post(url, headers=headers, json=payload)
         if response.status_code == 200:
             datos = response.json()
-            # Cohere v2 devuelve la respuesta en una estructura de lista dentro de 'message'
             try:
                 for bloque in datos['message']['content']:
                     if bloque.get('type') == 'text':
@@ -81,6 +79,10 @@ def consultar_cohere_directo(contexto, pregunta, api_key, modelo_nombre):
             return f"Error en la API de Cohere: {response.status_code} - {response.text}"
     except Exception as e:
         return f"Error de red: {e}"
+
+# ==========================================
+# LÓGICA PRINCIPAL DEL AGENTE
+# ==========================================
 
 def iniciar_agente():
     print("🤖 Iniciando el Agente IA con Cohere V2... Procesando documento...")
@@ -97,14 +99,12 @@ def iniciar_agente():
         print(f"❌ Error: No se encontró '{pdf_path}'. Pon tu PDF en esta carpeta.")
         return
 
-    # 2. Leer y dividir el PDF
     loader = PyPDFLoader(pdf_path)
     docs = loader.load()
 
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
     splits = text_splitter.split_documents(docs)
 
-    # 3. Crear la memoria local
     print("⏳ Creando base de datos vectorial (memoria local)...")
     embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
     vectorstore = FAISS.from_documents(splits, embeddings)
@@ -112,7 +112,6 @@ def iniciar_agente():
 
     print("\n✅ ¡Agente listo! Hazme una pregunta sobre el documento. (Escribe 'salir' para terminar)\n")
 
-    # 4. Bucle principal
     while True:
         user_input = input("Tú: ")
         if user_input.lower() in ['salir', 'exit', 'quit']:
